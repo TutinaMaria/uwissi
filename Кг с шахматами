@@ -1,0 +1,108 @@
+Imports System
+
+Module Program
+    Private b As Char = "0"c
+    Sub Main(args As String())
+        Console.SetWindowSize(100, 50)
+        Console.WriteLine("выберите задачу: 1 - гориз линия, 2 - верт линия, 3 - полный квадрат, 4 - пустой квадрад, 5 - cells, 6 - rects, 7 - rulers, 8 - диагональ вниз,9 -диагональ вверх, сердечко - 10, шахматы - 11")
+        Dim N As Integer
+        N = CInt(Console.ReadLine())
+        Select Case N
+            Case 1 : hline(10, 10, 15)
+            Case 2 : vline(10, 10, 15)
+            Case 3 : filrect(5, 5, 10, 10)
+            Case 4 : rect(5, 5, 15, 20)
+            Case 5
+                For i As Byte = 0 To 5
+                    hline(10, 5 * i + 5, 50)
+                Next
+                For i As Byte = 0 To 5
+                    vline(10 * i + 10, 5, 27)
+                Next
+            Case 6
+                Console.BackgroundColor = ConsoleColor.Red
+                Console.ForegroundColor = ConsoleColor.Black
+                For j As Byte = 0 To 5
+                    For i As Byte = 0 To 7
+                        filrect(10 * i + 10, 10 * j + 10, 5, 5)
+                    Next
+                Next
+            Case 7
+                For i As Byte = 0 To 5
+                    hline(5, 5 * i + 5, 50)
+                Next
+            Case 8 : diagonaldown(5, 5, 10)
+            Case 9 : diagonalup(10, 15, 5)
+            Case 10
+                Console.BackgroundColor = ConsoleColor.Red
+                Console.ForegroundColor = ConsoleColor.Red
+                diagonalup(5, 7, 4)
+                diagonalup(19, 7, 4)
+                diagonaldown(13, 4, 4)
+                diagonaldown(27, 4, 4)
+                diagonaldown(5, 7, 8)
+                diagonalup(19, 14, 8)
+                Console.Read()
+            Case 11
+                Console.ForegroundColor = ConsoleColor.Red
+                rect(5, 5, 66, 34)
+                For j As Byte = 0 To 3
+                    For k As Byte = 0 To 1
+                        For i As Byte = 0 To 3
+                            filrect(16 * i + 8 * k + 6, 4 * k + 8 * j + 6, 8, 4)
+                        Next
+                    Next
+                Next
+                Console.ForegroundColor = ConsoleColor.Green
+                For j As Byte = 0 To 3
+                    For k As Byte = 0 To 1
+                        For i As Byte = 0 To 3
+                            filrect(16 * i - 8 * k + 14, 4 * k + 8 * j + 6, 8, 4)
+                        Next
+                    Next
+                Next
+                Console.WriteLine()
+        End Select
+    End Sub
+    Sub hline(leftx As Byte, topy As Byte, lent As Byte)
+        Console.SetCursorPosition(leftx, topy)
+        For i = 1 To lent
+            Console.Write(b)
+        Next
+    End Sub
+    Sub vline(leftx As Byte, topy As Byte, widht As Byte)
+        Console.SetCursorPosition(leftx, topy)
+        For i = 0 To widht - 1
+            Console.Write(b)
+            Console.SetCursorPosition(leftx, topy + i)
+        Next
+    End Sub
+    Sub rect(leftx As Byte, topy As Byte, widht As Byte, height As Byte)
+        hline(leftx, topy, widht)
+        vline(leftx, topy, height)
+        hline(leftx, topy + height - 1, widht)
+        vline(leftx + widht - 1, topy, height + 1)
+    End Sub
+    Sub filrect(LeftX As Integer, TopY As Byte, widht As Byte, height As Byte)
+        Console.SetCursorPosition(LeftX, TopY)
+        For i As Byte = 0 To height - 1
+            hline(LeftX, TopY + i, widht)
+        Next
+    End Sub
+    Sub diagonaldown(leftx As Byte, topy As Byte, widht As Byte)
+        Console.SetCursorPosition(leftx, topy)
+        For i = 0 To widht
+            Console.Write(b)
+            Console.Write(b)
+            Console.SetCursorPosition(leftx + i * 2, topy + i)
+        Next
+    End Sub
+    Sub diagonalup(leftx As Byte, topy As Byte, widht As Byte)
+        Console.SetCursorPosition(leftx, topy)
+        For i = 0 To widht
+            Console.Write(b)
+            Console.Write(b)
+            Console.SetCursorPosition(leftx + i * 2, topy - i)
+        Next
+    End Sub
+End Module
